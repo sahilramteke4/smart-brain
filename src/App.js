@@ -46,8 +46,8 @@ class App extends Component {
     calculateFaceLoction = (data) => {
         const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
         const image = document.getElementById('inputImage');
-        const width = image.width;
-        const height = image.height;
+        const width = Number(image.width);
+        const height = Number(image.height);
         return {
           leftCol: clarifaiFace.left_col * width,
           topRow: clarifaiFace.top_row * height,
@@ -63,10 +63,10 @@ class App extends Component {
     onInputChange = (event) => {
       this.setState({input: event.target.value});
     }
-
+//https://salty-shelf-34577.herokuapp.com
   onButtonSubmit = () => {
       this.setState({imageUrl: this.state.input});
-      fetch('https://salty-shelf-34577.herokuapp.com/imageUrl' , {
+      fetch('http://localhost:3000/imageUrl' , {
             method: 'post',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
@@ -76,7 +76,7 @@ class App extends Component {
       .then(response => response.json())
       .then(response => {
         if(response) {
-          fetch('https://salty-shelf-34577.herokuapp.com/image' , {
+          fetch('http://localhost:3000/image' , {
             method: 'put',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
